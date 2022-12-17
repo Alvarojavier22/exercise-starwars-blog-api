@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Favorites
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -16,3 +16,12 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/favorites/<int:user_param>')
+def get_user_favorite(user_param):
+    user_favorites=FAvorites.query.filter(user_id==user_param).all()
+    for(i, range(0, len(user_favorites))):
+        if(user_favorites[i].type=='planet'):
+            favorite_planet=Planets.get(user_favorites[i].favorite_id)
+
+    return list(map(lambda fav: fav.serialize(), user_favorites))

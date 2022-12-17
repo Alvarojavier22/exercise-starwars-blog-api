@@ -17,3 +17,20 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class Favorites(db.Model):
+    __tablename__="favorites"
+    id=db.Column(db.Integer,primary_key=True)
+    type=db.Column(db.String(150), nullable=False)
+    favorite_id=db.Column(db.Integer, nullable=False)
+    user_id=db.Column(db.Integer, db.ForeignKey("user.id"))
+    user=db.relationship(User)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "type": self.favorite_type,
+            "favorite_id"
+            # do not serialize the password, its a security breach
+        }
+    
