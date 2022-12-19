@@ -19,5 +19,19 @@ def handle_hello():
 
 @api.route('/favorites/<int:user_param>')
 def get_user_favorite(user_param):
-    user_favorites = Favorites.query.filter(Favorites.user_id==user_param).all
-    return list(map(lambda fav: fav.serialize(), user_favorites))
+    user_favorites = Favorites.query.filter(Favorites.user_id==user_param).all()
+    favorite_list = []
+    for i in range(len(user_favorites)):
+        favorite_item = user_favorites[i].serialize()
+
+        if (user_favorites[i].favorite_type=='planet'):
+            favorite_planet = Planets.query.get(user_favorites[i].favorite_id)
+            favorite_item["data"] = favorite_planet.serialize()
+        
+        if (user_favorites[i].type == 'character'):
+            favorite_character = Characters.query.get(user_favorites[i].favorite_id)
+            favorite_item["data"] = favorite_character.serialize()
+
+        favorite_list.append(favorite_item)
+
+    return jsonify(favorite_list)
