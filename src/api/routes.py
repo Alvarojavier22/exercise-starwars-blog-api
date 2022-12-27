@@ -28,7 +28,7 @@ def get_user_favorite(user_param):
             favorite_planet = Planets.query.get(user_favorites[i].favorite_id)
             favorite_item["data"] = favorite_planet.serialize()
         
-        if (user_favorites[i].type == 'character'):
+        if (user_favorites[i].favorite_type == 'character'):
             favorite_character = Characters.query.get(user_favorites[i].favorite_id)
             favorite_item["data"] = favorite_character.serialize()
 
