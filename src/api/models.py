@@ -23,6 +23,9 @@ class Planets(db.Model):
     __tablename__="planets"
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(120), unique=True, nullable=False)
+    population=db.Column(db.Integer, unique=True, nullable=False)
+    gravity=db.Column(db.Integer, unique=True, nullable=False)
+
     def __repr__(self):
         return '<planets %r>' % self.id
 
@@ -36,6 +39,11 @@ class Characters(db.Model):
     __tablename__ = "character"
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(120), unique=True, nullable=False)
+    gender=db.Column(db.String(120), nullable=False)
+    homeworld=db.Column(db.String(120), unique=True, nullable=False)
+    mass=db.Column(db.Integer, unique=True, nullable=False)
+
+
     def __repr__(self):
         return '<planets %r' % self.id
 
